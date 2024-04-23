@@ -1,27 +1,35 @@
 package service
 
 import (
-	"fmt"
+	"roar-dashboard-backend/models"
 	"roar-dashboard-backend/repository"
-	"roar-dashboard-backend/utils"
-	"strings"
 )
 
 type Service struct {
 	repo repository.Repo
 }
 
-func (ser *Service) GetFeatureRequestsPage(token string) error {
-	authTokenArr := strings.Split(token, " ")
-	authToken := authTokenArr[len(authTokenArr)-1]
-	fmt.Println(authToken)
-	userId, err := ser.repo.GetUserIdFromToken(authToken)
+func (ser *Service) GetFeatureRequestsPage(feature_id int) (models.FeatureRequest, error) {
+	feature_details, err := ser.repo.GetFeatureDetails(feature_id)
+	if err != nil {
+		return models.FeatureRequest{}, err
+	}
+	return feature_details, nil
+}
+
+func (ser *Service) GetAllFeatureRequestsPage() ([]models.FeatureRequest, error) {
+	all_feature_details, err := ser.repo.GetAllFeatureDetails()
+	if err != nil {
+		return nil, err
+	}
+	return all_feature_details, nil
+}
+
+func (ser *Service) CreateFeature(createFeature models.FeatureRequest) error {
+	err := ser.repo.CreateFeature(createFeature)
 	if err != nil {
 		return err
 	}
-	fmt.Println("//////////////////", userId)
-	user_data := utils.GetUserDetailsfromId(userId)
-	fmt.Println(user_data)
 	return nil
 }
 

@@ -1,9 +1,9 @@
 package utils
 
-import (
-	"roar-dashboard-backend/models"
-)
-
-func GetUserDetailsfromId(user_id int) (user models.User) {
-	return models.User{}
-}
+// func GetUserDetailsfromId(user_id int) (user models.User, err error) {
+// 	user, err = repository.GetUserDetailsFromId(user_id)
+// 	if err != nil {
+// 		return models.User{}, err
+// 	}
+// 	return user, nil
+// }
